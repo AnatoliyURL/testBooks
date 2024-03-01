@@ -15,6 +15,9 @@ $config = [
         'rbac' => [
             'class' => 'yii2mod\rbac\Module',
         ],
+        'book' => [
+            'class' => 'app\modules\book\Module',
+        ],
     ],
     'components' => [
         'request' => [
