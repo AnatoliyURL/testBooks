@@ -62,7 +62,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $books = Book::find()->all();
+        $books = Book::find()->where(['is_deleted' => false])->all();
         return $this->render('index', compact(['books']));
     }
 

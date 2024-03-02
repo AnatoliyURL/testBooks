@@ -43,9 +43,9 @@ class Author extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'surname' => 'Surname',
-            'name' => 'Name',
-            'patronymic' => 'Patronymic',
+            'surname' => 'Фамилия',
+            'name' => 'Имя',
+            'patronymic' => 'Отчество',
         ];
     }
 

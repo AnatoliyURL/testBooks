@@ -12,6 +12,7 @@ use Yii;
  *
  * @property Author $author
  * @property Book $book
+ * @property Book $actualBook
  */
 class BookAuthors extends \yii\db\ActiveRecord
 {
@@ -65,5 +66,15 @@ class BookAuthors extends \yii\db\ActiveRecord
     public function getBook()
     {
         return $this->hasOne(Book::class, ['id' => 'book_id']);
+    }
+
+    /**
+     * Gets query for [[Book]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getActualBook(): \yii\db\ActiveQuery
+    {
+        return $this->hasOne(Book::class, ['id' => 'book_id'])->where(['books.is_deleted' => false]);
     }
 }

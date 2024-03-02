@@ -39,14 +39,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => 'Главная страница', 'url' => ['/site/index']],
+            ['label' => 'Список книг', 'url' => ['/site/index']],
             !Yii::$app->user->isGuest ? ['label' => 'Добавить новую книгу', 'url' => ['/book/create']] : '',
+            !Yii::$app->user->isGuest ? ['label' => 'Отчет', 'url' => ['/book/report/favorite-year']] : '',
             Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/site/login']]
+                ? ['label' => 'Авторизоваться', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
                     . Html::beginForm(['/site/logout'])
                     . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
+                        Yii::$app->user->identity->username,
                         ['class' => 'nav-link btn btn-link logout']
                     )
                     . Html::endForm()
@@ -70,7 +71,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <footer id="footer" class="mt-auto py-3 bg-light">
     <div class="container">
         <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
+            <div class="col-md-6 text-center text-md-start">&copy; <?= date('Y') ?></div>
             <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
         </div>
     </div>

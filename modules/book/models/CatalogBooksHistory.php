@@ -3,7 +3,8 @@
 namespace app\modules\book\models;
 
 use app\models\User;
-use Yii;
+use app\modules\book\clients\SmsPilotClient;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "catalog_books_history".
@@ -19,6 +20,7 @@ use Yii;
  */
 class CatalogBooksHistory extends \yii\db\ActiveRecord
 {
+    const EVENT_RECEIPT = 1; // Событие поступления книги на импровизированный склад
     /**
      * {@inheritdoc}
      */
@@ -73,5 +75,16 @@ class CatalogBooksHistory extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        switch($this->event) {
+            case self::EVENT_RECEIPT:
+                (new SmsPilotClient())->sendMessages(ArrayHelper::getColumn($this->book->bookSubscriptions, 'phone'), 'Книга поступила');
+                break;
+        }
+
+        return parent::beforeSave($insert);
     }
 }

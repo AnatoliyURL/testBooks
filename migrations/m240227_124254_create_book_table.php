@@ -17,7 +17,8 @@ class m240227_124254_create_book_table extends Migration
             'title' => $this->string()->notNull(),
             'date_released' => $this->date()->notNull(),
             'description' => $this->text(),
-            'isbn' => $this->char(13)
+            'isbn' => $this->char(13),
+            'cover' => $this->string()
         ]);
     }
 

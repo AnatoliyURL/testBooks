@@ -19,21 +19,20 @@ $this->title = 'Карточки';
         <?php
         foreach ($books as $book): ?>
             <div class="col-sm-3">
-                <div class="card" style="width: 18rem;">
+                <div class="card">
                     <?php
                     if ($book->cover): ?>
                         <img class="card-img-top" src="<?= $book->urlCover ?>" alt="<?= $book->title ?>">
                     <?php
                     endif ?>
                     <div class="card-body">
-                        <h5 class="card-title"><?= $book->title ?></h5>
+                        <h4 class="card-title"><?= $book->title ?></h4>
                         <?php
 
                         foreach ($book->bookAuthors as $author): ?>
-                            <p><?= $author->author->fullName ?></p>
+                            <p class="lead"><?= $author->author->fullName ?></p>
                         <?php
                         endforeach; ?>
-                        <p class="card-text"><?= $book->description ?></p>
                         <?= Html::a(
                             'Подробнее',
                             Url::to(['/book/view', 'id' => $book->id]),

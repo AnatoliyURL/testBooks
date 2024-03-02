@@ -56,4 +56,14 @@ class CatalogBooks extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Book::class, ['id' => 'book_id']);
     }
+
+    /**
+     * Gets query for [[Book]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getActualBook()
+    {
+        return $this->hasOne(Book::class, ['id' => 'book_id'])->where(['books.is_deleted' => false]);
+    }
 }

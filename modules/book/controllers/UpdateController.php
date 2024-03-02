@@ -3,7 +3,7 @@
 namespace app\modules\book\controllers;
 
 use app\modules\book\models\Book;
-use app\modules\book\models\UploadImage;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\UploadedFile;
@@ -13,6 +13,22 @@ use yii\web\UploadedFile;
  */
 class UpdateController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'update'],
+                        'roles' => ['@'],
+                    ]
+                ],
+            ],
+        ];
+    }
+
     /**
      * Renders the index view for the module
      * @return string
@@ -28,6 +44,7 @@ class UpdateController extends Controller
         if (\Yii::$app->request->isPost) {
             $book = Book::findOne(['id' => ArrayHelper::getValue(\Yii::$app->request->post('Book'), 'id')]);
             if ($book) {
+                $book->file = UploadedFile::getInstance($book, 'file');
                 $book->load(\Yii::$app->request->post());
                 if ($book->save()) {
                     return $this->redirect(['/book/view', 'id' => $book->id]);
